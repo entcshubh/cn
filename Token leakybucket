@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int no_of_queries, storage, output_pkt_size;
+    int input_pkt_size, bucket_size, size_left;
+
+    // Initial packets in the bucket
+    storage = 0;
+
+    // Total no. of times bucket content is checked
+    no_of_queries = 4;
+
+    // Total no. of packets that can be accommodated in the bucket
+    bucket_size = 10;
+
+    // No. of packets that enters the bucket at a time
+    input_pkt_size = 4;
+
+    // No. of packets that exits the bucket at a time
+    output_pkt_size = 1;
+
+    for (int i = 0; i < no_of_queries; i++) {
+        size_left = bucket_size - storage;
+
+        if (input_pkt_size <= size_left) {
+            // If there is enough space, add input_pkt_size to the storage
+            storage += input_pkt_size;
+        } else {
+            // If there's not enough space, add only what can fit, and the rest is dropped
+            storage = bucket_size;
+            printf("Packet loss = %d\n", input_pkt_size - size_left);
+        }
+
+        printf("Buffer size = %d out of bucket size = %d\n", storage, bucket_size);
+
+        // Packets are removed from the bucket regardless of whether they were added or not.
+        storage -= output_pkt_size;
+
+        if (storage < 0) {
+            storage = 0;
+        }
+    }
+
+    return 0;
+}
